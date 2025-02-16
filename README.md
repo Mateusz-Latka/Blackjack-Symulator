@@ -1,87 +1,81 @@
-# Blackjack Symulator
+# Blackjack Simulator
 
-## Opis projektu
+## Project Description
 
-Blackjack Symulator to aplikacja napisana w języku C++, która symuluje popularną grę karcianą blackjack. Projekt wykorzystuje CMake do zarządzania kompilacją.
+Blackjack Simulator is a C++ application that simulates the popular card game blackjack. The project uses CMake for build management.
 
-## Funkcjonalności
+## Features
 
-- **Symulacja gry:** Gra symuluje klasyczną rozgrywkę blackjack pomiędzy jednym graczem a dealerem.
-- **Dobieranie kart:** Gracz ma możliwość dobierania kart, aby zbliżyć się do wartości 21 bez jej przekroczenia.
-- **Sprawdzanie wyniku:** Aplikacja automatycznie sprawdza wyniki po każdej rundzie, określając zwycięzcę.
-- **Interfejs graficzny:** Umożliwia interakcję z graczem poprzez graficzny interfejs użytkownika zbudowany przy użyciu Qt.
-- **Ochrona przed błędami:** Aplikacja zawiera mechanizmy zapobiegające typowym błędom, takim jak wprowadzenie nieprawidłowych danych przez użytkownika.
-- **Tabela wyników:** Po zakończeniu gry gracz może zapisać swój wynik w tabeli wyników. Gra toczy się tak długo, aż gracz nie straci wszystkich punktów.
+- **Game Simulation:** The game simulates a classic blackjack match between a single player and the dealer.  
+- **Card Drawing:** The player can draw cards to get as close as possible to 21 without exceeding it.  
+- **Result Checking:** The application automatically checks the results after each round to determine the winner.  
+- **Graphical Interface:** Provides user interaction through a graphical user interface built with Qt.  
+- **Error Prevention:** The application includes mechanisms to prevent common errors, such as invalid user input.  
+- **Scoreboard:** After finishing a game, the player can save their score in a leaderboard. The game continues until the player loses all points.  
 
-## Klasy
+## Classes  
 
-### Card
-- Przechowuje informacje o karcie, takie jak jej rangę i kolor.
-- Metody:
-  - `Card(const std::string &rank, const std::string &suit)`: Konstruktor inicjalizujący kartę.
-  - `int calculateScore() const`: Oblicza i zwraca wartość punktową karty.
-  - `QLabel* createLabel(QWidget *parent = nullptr, bool isHidden = false) const`: Tworzy i zwraca QLabel reprezentujący kartę.
+### Card  
+- Stores information about a card, such as its rank and suit.  
+- Methods:  
+  - `Card(const std::string &rank, const std::string &suit)`: Constructor initializing a card.  
+  - `int calculateScore() const`: Calculates and returns the card’s point value.  
+  - `QLabel* createLabel(QWidget *parent = nullptr, bool isHidden = false) const`: Creates and returns a QLabel representing the card.  
 
-### Deck
-- Przechowuje talię kart i zarządza nimi.
-- Metody:
-  - `Deck()`: Konstruktor inicjalizujący talię kart.
-  - `void initializeDeck()`: Inicjalizuje talię kart.
-  - `Card drawCard()`: Losuje kartę z talii.
+### Deck  
+- Stores and manages a deck of cards.  
+- Methods:  
+  - `Deck()`: Constructor initializing the deck.  
+  - `void initializeDeck()`: Initializes the deck of cards.  
+  - `Card drawCard()`: Draws a random card from the deck.  
 
-### Dealer
-- Klasa pochodna klasy `Player`, reprezentująca dealera w grze.
-- Metody:
-  - `Dealer()`: Konstruktor inicjalizujący dealera.
-  - `void revealHiddenCard()`: Odkrywa ukrytą kartę dealera.
+### Dealer  
+- A subclass of `Player`, representing the dealer in the game.  
+- Methods:  
+  - `Dealer()`: Constructor initializing the dealer.  
+  - `void revealHiddenCard()`: Reveals the dealer’s hidden card.  
 
-### GameLogic
-- Zarządza logiką gry, taką jak obsługa końca gry.
-- Metody:
-  - `static void handleGameOver(int gameResult, int &balance, int &totalWinnings, int bet, QWidget *gameWindow)`: Obsługuje zakończenie gry.
+### GameLogic  
+- Manages game logic, such as handling game over conditions.  
+- Methods:  
+  - `static void handleGameOver(int gameResult, int &balance, int &totalWinnings, int bet, QWidget *gameWindow)`: Handles the end of the game.  
 
-### MainWindow
-- Główne okno aplikacji.
-- Metody:
-  - `MainWindow(QWidget *parent = nullptr)`: Konstruktor inicjalizujący główne okno.
-  - `~MainWindow()`: Destruktor.
-  - `void on_PlayButton_clicked()`: Obsługuje kliknięcie przycisku "Play".
-  - `void on_H2PButton_clicked()`: Obsługuje kliknięcie przycisku "H2P".
-  - `void on_LeaderButton_clicked()`: Obsługuje kliknięcie przycisku "Leader".
+### MainWindow  
+- The main window of the application.  
+- Methods:  
+  - `MainWindow(QWidget *parent = nullptr)`: Constructor initializing the main window.  
+  - `~MainWindow()`: Destructor.  
+  - `void on_PlayButton_clicked()`: Handles the "Play" button click.  
+  - `void on_H2PButton_clicked()`: Handles the "H2P" button click.  
+  - `void on_LeaderButton_clicked()`: Handles the "Leader" button click.  
 
-### ScoreManager
-- Zarządza wynikami gry.
-- Metody:
-  - `static QVector<QPair<QString, int>> readScores(const QString &filePath)`: Odczytuje wyniki z pliku.
-  - `static bool writeScore(const QString &filePath, const QString &name, int score)`: Zapisuje wynik do pliku.
+### ScoreManager  
+- Manages game scores.  
+- Methods:  
+  - `static QVector<QPair<QString, int>> readScores(const QString &filePath)`: Reads scores from a file.  
+  - `static bool writeScore(const QString &filePath, const QString &name, int score)`: Writes a score to a file.  
 
-### BalanceWindow
-- Okno zarządzające balansem gracza.
-- Metody:
-  - `BalanceWindow(QWidget *parent = nullptr)`: Konstruktor inicjalizujący okno.
-  - `~BalanceWindow()`: Destruktor.
-  - `void StartingBalance()`: Ustawia początkowy balans.
-  - `void setBet(int bet)`: Ustawia zakład.
-  - `int getBet() const`: Zwraca wartość zakładu.
-  - `void on_StartBlackjackButton_clicked()`: Obsługuje kliknięcie przycisku "Start Blackjack".
-  - `void handleGameOver(int gameResult)`: Obsługuje zakończenie gry.
+### BalanceWindow  
+- The window managing the player’s balance.  
+- Methods:  
+  - `BalanceWindow(QWidget *parent = nullptr)`: Constructor initializing the window.  
+  - `~BalanceWindow()`: Destructor.  
+  - `void StartingBalance()`: Sets the initial balance.  
+  - `void setBet(int bet)`: Sets the bet amount.  
+  - `int getBet() const`: Returns the bet amount.  
+  - `void on_StartBlackjackButton_clicked()`: Handles the "Start Blackjack" button click.  
+  - `void handleGameOver(int gameResult)`: Handles the end of the game.  
 
-### Hand
-- Reprezentuje rękę gracza lub dealera.
-- Metody:
-  - `void addCard(const Card &card)`: Dodaje kartę do ręki.
-  - `int calculateScore() const`: Oblicza i zwraca sumaryczną wartość punktową ręki.
+### Hand  
+- Represents a player's or dealer's hand.  
+- Methods:  
+  - `void addCard(const Card &card)`: Adds a card to the hand.  
+  - `int calculateScore() const`: Calculates and returns the total score of the hand.  
 
-### StyledMessageBox
-- Spersonalizowane okno wiadomości.
-- Metody:
-  - `StyledMessageBox(QWidget *parent = nullptr)`: Konstruktor inicjalizujący okno wiadomości.
-  - `static StyledMessageBox* customCritical(QWidget *parent, const QString &title, const QString &text)`: Tworzy niestandardowe okno wiadomości krytycznej.
-  - `static StyledMessageBox* success(QWidget *parent, const QString &title, const QString &text)`: Tworzy okno wiadomości sukcesu.
+### StyledMessageBox  
+- Custom-styled message box.  
+- Methods:  
+  - `StyledMessageBox(QWidget *parent = nullptr)`: Constructor initializing the message box.  
+  - `static StyledMessageBox* customCritical(QWidget *parent, const QString &title, const QString &text)`: Creates a custom critical message box.  
+  - `static StyledMessageBox* success(QWidget *parent, const QString &title, const QString &text)`: Creates a success message box.  
 
-## Instalacja
-
-1. Sklonuj repozytorium:
-   ```sh
-   git clone https://github.com/Mateusz-Latka/Blackjack-Symulator.git
-   cd Blackjack-Symulator
