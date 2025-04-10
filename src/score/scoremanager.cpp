@@ -1,38 +1,58 @@
 #include "scoremanager.h"
-#include <QFile>
+#include <QSqlQuery>
+#include <QSqlError>
 #include "../ui/styledmessagebox.h"
+#include <QSqlDatabase>
 
-QVector<QPair<QString, int>> ScoreManager::readScores(const QString &filePath) {
-    QVector<QPair<QString, int>> scores;
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        StyledMessageBox::critical(nullptr, "Error", "Could not open " + filePath);
-        return scores;
-    }
+ScoreManager::ScoreManager() = default;
 
-    QTextStream in(&file);
-    while (!in.atEnd()) {
-        QString line = in.readLine();
-        QStringList parts = line.split(" ");
-        if (parts.size() == 2) {
-            QString name = parts[0];
-            int score = parts[1].toInt();
-            scores.append(qMakePair(name, score));
-        }
+ScoreManager::~ScoreManager() {
+    if (db.isOpen()) {
+        db.close();
     }
-    file.close();
-    return scores;
 }
 
-bool ScoreManager::writeScore(const QString &filePath, const QString &name, int score) {
-    QFile file(filePath);
-    if (!file.open(QIODevice::Append | QIODevice::Text)) {
-        StyledMessageBox::critical(nullptr, "Error", "Could not open file to save score.");
+bool ScoreManager::initializeDatabase(const QString &dbPath) {
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(dbPath);
+
+    if (!db.open()) {
+        StyledMessageBox::critical(nullptr, "Database Error", "Could not open database: " + db.lastError().text());
         return false;
     }
 
-    QTextStream out(&file);
-    out << name << " " << score << "\n";
-    file.close();
+    QSqlQuery query;
+    if (!query.exec("CREATE TABLE IF NOT EXISTS scores (name TEXT, score INTEGER)")) {
+        StyledMessageBox::critical(nullptr, "Database Error", "Could not create table: " + query.lastError().text());
+        return false;
+    }
+
+    return true;
+}
+
+QVector<QPair<QString, int>> ScoreManager::readScores() {
+    QVector<QPair<QString, int>> scores;
+    QSqlQuery query("SELECT name, score FROM scores ORDER BY score DESC");
+
+    while (query.next()) {
+        QString name = query.value(0).toString();
+        int score = query.value(1).toInt();
+        scores.append(qMakePair(name, score));
+    }
+
+    return scores;
+}
+
+bool ScoreManager::writeScore(const QString &name, int score) {
+    QSqlQuery query;
+    query.prepare("INSERT INTO scores (name, score) VALUES (:name, :score)");
+    query.bindValue(":name", name);
+    query.bindValue(":score", score);
+
+    if (!query.exec()) {
+        StyledMessageBox::critical(nullptr, "Database Error", "Could not insert score: " + query.lastError().text());
+        return false;
+    }
+
     return true;
 }

@@ -1,9 +1,7 @@
 #include "gamelogic.h"
-#include <QMessageBox>
 #include <QInputDialog>
 #include "../score/scoremanager.h"
 #include "../ui/mainwindow.h"
-#include <QDir>
 #include "../ui/styledmessagebox.h"
 
 void GameLogic::handleGameOver(int gameResult, int &balance, int &totalWinnings, int bet, QWidget *gameWindow) {
@@ -26,15 +24,16 @@ void GameLogic::handleGameOver(int gameResult, int &balance, int &totalWinnings,
                     StyledMessageBox::customCritical(gameWindow, "Error", "Score not saved.");
                     break;
                 }
-                if(playerName.isEmpty())
-                {
+                if (playerName.isEmpty()) {
                     StyledMessageBox::customCritical(gameWindow, "Error", "Name cannot be empty.");
                 }
             } while (playerName.isEmpty());
 
             if (ok && !playerName.isEmpty()) {
-                QString filePath = QDir::currentPath() + "/Leaderboard/data.txt";
-                ScoreManager::writeScore(filePath, playerName, totalWinnings);
+                ScoreManager scoreManager;
+                if (!scoreManager.writeScore(playerName, totalWinnings)) {
+                    StyledMessageBox::customCritical(gameWindow, "Error", "Failed to save score to the database.");
+                }
             }
         }
         StyledMessageBox::information(gameWindow, "Game Over", "Returning to the main menu.");

@@ -3,7 +3,6 @@
 #include "../score/scoremanager.h"
 #include <algorithm>
 #include "mainwindow.h"
-#include <QDir>
 
 LeaderboardWindow::LeaderboardWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::LeaderboardWindow) {
@@ -13,8 +12,8 @@ LeaderboardWindow::LeaderboardWindow(QWidget *parent) :
     ui->leaderboardListWidget->setStyleSheet("font-size: 30px;");
     connect(ui->ToMainLobbyButton, &QPushButton::clicked, this, &LeaderboardWindow::on_backButton_clicked);
 
-    QString filePath = QDir::currentPath() + "/Leaderboard/data.txt";
-    QVector<QPair<QString, int>> scores = ScoreManager::readScores(filePath);
+    ScoreManager scoreManager;
+    QVector<QPair<QString, int>> scores = ScoreManager::readScores();
 
     std::sort(scores.begin(), scores.end(), [](const QPair<QString, int> &a, const QPair<QString, int> &b) {
         return a.second > b.second;
@@ -23,16 +22,13 @@ LeaderboardWindow::LeaderboardWindow(QWidget *parent) :
     int position = 1;
     QString positionString;
     for (const auto &entry : scores) {
-        if(position == 1){
+        if (position == 1) {
             positionString = "🥇";
-        }
-        else if(position == 2){
+        } else if (position == 2) {
             positionString = "🥈";
-        }
-        else if(position == 3) {
+        } else if (position == 3) {
             positionString = "🥉";
-        }
-        else {
+        } else {
             positionString = " " + QString::number(position) + ". ";
         }
         ui->leaderboardListWidget->addItem(positionString + entry.first + ": " + QString::number(entry.second));

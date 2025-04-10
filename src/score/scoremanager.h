@@ -1,15 +1,18 @@
-// scoremanager.h
-#ifndef SCOREMANAGER_H
-#define SCOREMANAGER_H
-
-#include <QString>
+#pragma once
+#include <QSqlDatabase>
 #include <QVector>
 #include <QPair>
+#include <QString>
 
 class ScoreManager {
 public:
-    static QVector<QPair<QString, int>> readScores(const QString &filePath);
-    static bool writeScore(const QString &filePath, const QString &name, int score);
-};
+    ScoreManager();
+    ~ScoreManager();
 
-#endif // SCOREMANAGER_H
+    bool initializeDatabase(const QString &dbPath);
+    static QVector<QPair<QString, int>> readScores();
+    static bool writeScore(const QString &name, int score);
+
+private:
+    QSqlDatabase db;
+};
