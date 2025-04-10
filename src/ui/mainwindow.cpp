@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "./ui_mainwindow.h"
+#include "../../cmake-build-debug/Blackjack-Symulator_autogen/include/ui_mainwindow.h"
 #include "balancewindow.h"
 #include "leaderboardwindow.h"
 #include <QDesktopServices>

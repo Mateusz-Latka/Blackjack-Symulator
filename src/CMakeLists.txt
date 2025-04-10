@@ -8,50 +8,51 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_PREFIX_PATH "C:/Qt/6.9.0/mingw_64/lib/cmake")
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
-        Card.cpp
-        Card.h
-        gamewindow.h
-        gamewindow.cpp
-        gamewindow.ui
-        resources.qrc
-        balancewindow.h
-        balancewindow.cpp
-        balancewindow.ui
-        Deck.cpp
-        Deck.h
-        Hand.cpp
-        Hand.h
-        Player.cpp
-        Player.h
-        Dealer.cpp
-        Dealer.h
-        leaderboardwindow.cpp
-        leaderboardwindow.h
-        leaderboardwindow.ui
-        scoremanager.cpp
-        scoremanager.h
-        gamelogic.cpp
-        gamelogic.h
-        styledmessagebox.cpp
-        styledmessagebox.h
+        ui/mainwindow.cpp
+        ui/mainwindow.h
+        ui/mainwindow.ui
+        game/Card.cpp
+        game/Card.h
+        ui/gamewindow.h
+        ui/gamewindow.cpp
+        ui/gamewindow.ui
+        ../resources/resources.qrc
+        ui/balancewindow.h
+        ui/balancewindow.cpp
+        ui/balancewindow.ui
+        game/Deck.cpp
+        game/Deck.h
+        game/Hand.cpp
+        game/Hand.h
+        game/Player.cpp
+        game/Player.h
+        game/Dealer.cpp
+        game/Dealer.h
+        ui/leaderboardwindow.cpp
+        ui/leaderboardwindow.h
+        ui/leaderboardwindow.ui
+        score/scoremanager.cpp
+        score/scoremanager.h
+        game/gamelogic.cpp
+        game/gamelogic.h
+        ui/styledmessagebox.cpp
+        ui/styledmessagebox.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Blackjack-Symulator
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        gamewindow.h gamewindow.cpp gamewindow.ui
-        resources.qrc
-            balancewindow.h balancewindow.cpp balancewindow.ui
+            ui/gamewindow.h ui/gamewindow.cpp ui/gamewindow.ui
+            ../resources/resources.qrc
+            ui/balancewindow.h ui/balancewindow.cpp ui/balancewindow.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Blackjack-Symulator APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -89,7 +90,7 @@ set_target_properties(Blackjack-Symulator PROPERTIES
 
 include(GNUInstallDirs)
 install(TARGETS Blackjack-Symulator
-    BUNDLE DESTINATION .
+        BUNDLE DESTINATION ..
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )

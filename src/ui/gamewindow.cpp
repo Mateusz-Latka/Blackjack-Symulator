@@ -1,6 +1,6 @@
 #include "gamewindow.h"
-#include "ui_gamewindow.h"
-#include "Card.h"
+#include "../../cmake-build-debug/Blackjack-Symulator_autogen/include/ui_gamewindow.h"
+#include "../game/Card.h"
 #include <QMessageBox>
 #include <algorithm>
 #include <ctime>

@@ -3,9 +3,9 @@
 
 #include <QMainWindow>
 #include <QLabel>
-#include "Deck.h"
-#include "Player.h"
-#include "Dealer.h"
+#include "../game/Deck.h"
+#include "../game/Player.h"
+#include "../game/Dealer.h"
 
 namespace Ui {
     class gamewindow;

@@ -1,8 +1,8 @@
 #include "leaderboardwindow.h"
 #include "ui_LeaderboardWindow.h"
-#include "scoremanager.h"
+#include "../score/scoremanager.h"
 #include <algorithm>
-#include "mainWindow.h"
+#include "mainwindow.h"
 #include <QDir>
 
 LeaderboardWindow::LeaderboardWindow(QWidget *parent) :

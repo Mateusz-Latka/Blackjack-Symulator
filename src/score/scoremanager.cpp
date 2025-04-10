@@ -1,8 +1,6 @@
-
 #include "scoremanager.h"
 #include <QFile>
-#include <QMessageBox>
-#include "styledmessagebox.h"
+#include "../ui/styledmessagebox.h"
 
 QVector<QPair<QString, int>> ScoreManager::readScores(const QString &filePath) {
     QVector<QPair<QString, int>> scores;

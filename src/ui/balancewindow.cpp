@@ -1,9 +1,8 @@
 #include "balancewindow.h"
 #include "ui_balancewindow.h"
 #include "gamewindow.h"
-#include "gamelogic.h"
-
-#include "styledmessagebox.h"
+#include "../game/gamelogic.h"
+#include "../ui/styledmessagebox.h"
 
 BalanceWindow::BalanceWindow(QWidget *parent)
     : QMainWindow(parent)

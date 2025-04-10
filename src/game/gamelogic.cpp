@@ -1,10 +1,10 @@
 #include "gamelogic.h"
 #include <QMessageBox>
 #include <QInputDialog>
-#include "scoremanager.h"
-#include "mainwindow.h"
+#include "../score/scoremanager.h"
+#include "../ui/mainwindow.h"
 #include <QDir>
-#include "styledmessagebox.h"
+#include "../ui/styledmessagebox.h"
 
 void GameLogic::handleGameOver(int gameResult, int &balance, int &totalWinnings, int bet, QWidget *gameWindow) {
     if (gameResult == 1) {
