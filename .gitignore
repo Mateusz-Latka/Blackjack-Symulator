@@ -1,0 +1,37 @@
+# Pliki binarne i obiekty
+*.o
+*.obj
+*.so
+*.dylib
+*.dll
+*.exe
+
+# Pliki CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Foldery build
+build/
+out/
+Debug/
+Release/
+
+# Pliki logów i tymczasowe
+*.log
+*.tmp
+
+# Pliki specyficzne dla systemów operacyjnych
+.DS_Store
+Thumbs.db
+
+# Pliki IDE (np. CLion)
+.idea/
+*.iml
+
+# Pliki systemu kontroli wersji
+*.swp
+*.swo
+*.bak
+*.orig
